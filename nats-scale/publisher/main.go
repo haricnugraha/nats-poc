@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"strconv"
 	"time"
 
@@ -11,13 +11,13 @@ import (
 func main() {
 	// connect to nats server
 	nc, err := nats.Connect(nats.DefaultURL)
-	fmt.Println("Connected to " + nats.DefaultURL)
 	// Close connection
 	defer nc.Close()
 	if err != nil {
-		fmt.Println(err.Error())
+		log.Println(err.Error())
 		return
 	}
+	log.Println("Connected to " + nats.DefaultURL)
 
 	subject := "order.paid"
 
@@ -30,6 +30,6 @@ func main() {
 		// publish message
 		nc.Publish(subject, message)
 		duration := time.Since(startTime).Microseconds()
-		fmt.Printf("ID: %s, Duration: %d microseconds \n", id, duration)
+		log.Printf("ID: %s, Duration: %d microseconds \n", id, duration)
 	}
 }

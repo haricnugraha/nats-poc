@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  nats:
+    container_name: nats-main
+    image: nats:2-alpine
+    ports:
+      - 4222:4222
+    restart: unless-stopped
+  nats-streaming:
+    container_name: nats-streaming-main
+    image: nats-streaming:0.17.0-linux
+    ports:
+      - 5555:4222
+    entrypoint: "/nats-streaming-server -store file -dir datastore"
+    restart: unless-stopped

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"time"
 
 	"github.com/nats-io/nats.go"
@@ -10,20 +10,20 @@ import (
 func main() {
 	// connect to nats server
 	nc, err := nats.Connect(nats.DefaultURL)
-	fmt.Println("Connected to " + nats.DefaultURL)
 	// Close connection
 	defer nc.Close()
 	if err != nil {
-		fmt.Println(err.Error())
+		log.Println(err.Error())
 		return
 	}
+	log.Println("Connected to " + nats.DefaultURL)
 
 	subject := "order.paid"
 	message := []byte(`{id: random-id, total: 2000000}`)
-	startTime := time.Now()
 
 	// publish message
+	startTime := time.Now()
 	nc.Publish(subject, message)
 	duration := time.Since(startTime).Microseconds()
-	fmt.Printf("Duration: %d microseconds \n", duration)
+	log.Printf("Duration: %d microseconds \n", duration)
 }
