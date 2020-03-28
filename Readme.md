@@ -9,6 +9,10 @@ Just exploring Nats with Go
 
 ## Usage
 
+### Run nats and nats streaming server
+
+`docker-compose up -d`
+
 ### http distributed systems
 
 - Run subscriber
